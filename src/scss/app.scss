@@ -29,7 +29,14 @@ body {
   }
 
   &__title {
-    margin: 35px 0;
+    font-size: 30px;
+  }
+
+  .info__wrapper{
+    display: flex;
+    align-items: center;
+    margin: 50px 0;
+    justify-content: space-between;
   }
 
   &__items {

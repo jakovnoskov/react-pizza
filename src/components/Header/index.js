@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import {Link} from 'react-router-dom'
 import CartSvg from '../../svg/CartSvg'
 import LogoPizzaSvg from '../../svg/LogoPizzaSvg'
@@ -8,7 +8,7 @@ export default function Header() {
   return (
     <header className='header'>
     <div className='container'>
-      <Link to={`/`}>
+      <Link to={'/'}>
       <div className='header__logo'>
         <LogoPizzaSvg width={38}/>
         <div>
@@ -18,7 +18,7 @@ export default function Header() {
       </div>
       </Link>
       <div className='header__cart'>
-        <Link to={`cart`}>
+        <Link to={'cart'}>
           <button className='button button--cart'>
           <span className='totalPrice'>520 ₽</span>
           <div className='button__delimiter'></div>

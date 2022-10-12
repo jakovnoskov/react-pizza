@@ -1,6 +1,7 @@
 @import '../variables.scss';
 
 .sort {
+  cursor: pointer;
   position: relative;
   &__label {
     display: flex;
@@ -28,7 +29,6 @@
     span {
       color: $orange;
       border-bottom: 1px dashed $orange;
-      cursor: pointer;
     }
   }
 
@@ -42,6 +42,7 @@
     overflow: hidden;
     padding: 10px 0;
     width: 160px;
+    z-index: 2;
 
     ul {
       overflow: hidden;

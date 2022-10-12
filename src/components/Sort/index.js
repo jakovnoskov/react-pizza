@@ -1,38 +1,45 @@
 import React,{useState} from 'react'
-
+import { useSelector, useDispatch } from 'react-redux'
+import {setSort} from '../../redux/slices/filterSlice'
 import SortArrowSvg from '../../svg/SortArrowSvg'
 
-export default function Sort() {
-  const [open, setOpen] = useState(false)
-  const [selected, setSelected] = useState(0)
-  const list = ['популярности','цене','алфавиту']
-  const sortName = list[selected]
+const list = [
+  {name: 'популярности', sortProperty:'rating'},
+  {name: 'цене', sortProperty:'price'},
+  {name: 'алфавиту', sortProperty:'title'},
+]
 
-  const onClickListItem = (index) => {
-    setSelected(index)
-    setOpen(false)
-  }
+export default function Sort() {
+const dispatch = useDispatch()
+const sort = useSelector(state => state.filter.sort)
+
+const [open, setOpen] = useState(false)
+
+const onClickListItem = (obj) => {
+  dispatch(setSort(obj))
+  setOpen(false)
+}
 
 return (
-<div className='sort'>
-  <div className='sort__label'>
-  <div className={`arrowLabelBox ${open ? 'active':''}` }><SortArrowSvg/></div>
-  <b>Сортировка по:</b>
-  <span onClick={() => setOpen(!open)}>{sortName}</span>
-  </div>
-  {open && 
+  <div className='sort' onClick={() => setOpen(!open)}>
+    <div className='sort__label'>
+    <div className={`arrowLabelBox ${open ? 'active':''}` }><SortArrowSvg/></div>
+    <b>Сортировка по:</b>
+    <span>{sort.name}</span>
+    </div>
+    {open && 
     <div className='sort__popup'>
-    <ul>
-      {list.map((name,i) => (
+      <ul>
+        {list.map((obj,i) => (
           <li 
             key={i}
-            onClick={() => onClickListItem(i)} 
-            className={selected === i ? 'active':''}>
-            {name}
+            onClick={() => onClickListItem(obj)} 
+            className={sort.sortProperty === obj.sortProperty ? 'active':''}>
+            {obj.name}
           </li>
-      ))}
-    </ul>
-  </div>}
-</div>
+        ))}
+      </ul>
+    </div>}
+  </div>
   )
 }
