@@ -1,46 +1,58 @@
-import {useState, useRef} from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import {setSort} from '../../redux/slices/filterSlice'
+import { setSort } from '../../redux/slices/filterSlice'
 import SortArrowSvg from '../../svg/SortArrowSvg'
 
 const list = [
-  {name: 'популярности', sortProperty:'rating'},
-  {name: 'цене', sortProperty:'price'},
-  {name: 'алфавиту', sortProperty:'title'},
+  { name: 'популярности', sortProperty: 'rating' },
+  { name: 'цене', sortProperty: 'price' },
+  { name: 'алфавиту', sortProperty: 'title' },
 ]
 
 export default function Sort() {
-const dispatch = useDispatch()
-const sort = useSelector(state => state.filter.sort)
-const sortRef = useRef(null)
+  const dispatch = useDispatch()
+  const sort = useSelector(state => state.filter.sort)
+  const sortRef = useRef(null)
 
-const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(false)
 
-const onClickListItem = (obj) => {
-  dispatch(setSort(obj))
-  setOpen(false)
-}
+  const onClickListItem = (obj) => {
+    dispatch(setSort(obj))
+    setOpen(false)
+  }
 
-return (
-  <div ref={sortRef} className='sort' onClick={() => setOpen(!open)}>
-    <div className='sort__label'>
-    <div className={`arrowLabelBox ${open ? 'active':''}` }><SortArrowSvg/></div>
-    <b>Сортировка по:</b>
-    <span>{sort.name}</span>
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (!event.path.includes(sortRef.current)) {
+        setOpen(false)
+      }
+    }
+    document.body.addEventListener('click', handleClickOutside)
+    return () => {
+      document.body.removeEventListener('click', handleClickOutside)
+    }
+  }, [])
+
+  return (
+    <div ref={sortRef} className='sort' onClick={() => setOpen(!open)}>
+      <div className='sort__label'>
+        <div className={`arrowLabelBox ${open ? 'active' : ''}`}><SortArrowSvg /></div>
+        <b>Сортировка по:</b>
+        <span>{sort.name}</span>
+      </div>
+      {open &&
+        <div className='sort__popup'>
+          <ul>
+            {list.map((obj, i) => (
+              <li
+                key={i}
+                onClick={() => onClickListItem(obj)}
+                className={sort.sortProperty === obj.sortProperty ? 'active' : ''}>
+                {obj.name}
+              </li>
+            ))}
+          </ul>
+        </div>}
     </div>
-    {open && 
-    <div className='sort__popup'>
-      <ul>
-        {list.map((obj,i) => (
-          <li 
-            key={i}
-            onClick={() => onClickListItem(obj)} 
-            className={sort.sortProperty === obj.sortProperty ? 'active':''}>
-            {obj.name}
-          </li>
-        ))}
-      </ul>
-    </div>}
-  </div>
   )
 }

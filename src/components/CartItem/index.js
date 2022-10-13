@@ -1,35 +1,62 @@
 import MinusCartSvg from '../../svg/MinusCartSvg'
 import PlusCartSvg from '../../svg/PlusCartSvg'
 import RemoveCartSvg from '../../svg/RemoveCartSvg'
+import { useDispatch } from 'react-redux'
+import { addItem, minusItem, removeItem } from '../../redux/slices/cartSlice'
 
 export default function InfoBox({
-  name = 'Сырный цыпленок',
-  img='https://dodopizza-a.akamaihd.net/static/Img/Products/Pizza/ru-RU/b750f576-4a83-48e6-a283-5a8efb68c35d.jpg',
+  id = 0,
+  imageUrl = '',
+  name = '',
+  types = [],
+  sizes = [],
+  price = 0,
+  category = 0,
+  rating = 0,
+  count = 0,
+  type,
+  size
 }) {
-return (
-  <div class='cart__item'>
-  <div class='cart__item-img'>
-    <img
-      class='pizza-block__image'
-      src={img}
-      alt='Pizza'
-    />
-  </div>
-  <div class='cart__item-info'>
-    <h3>{name}</h3>
-    <p>тонкое тесто, 26 см.</p>
-  </div>
-  <div class='cart__item-count'>
-    <div class='button button--outline button--circle cart__item-count-minus'><MinusCartSvg/></div>
-    <b>2</b>
-    <div class='button button--outline button--circle cart__item-count-plus'><PlusCartSvg/></div>
-  </div>
-  <div class='cart__item-price'>
-    <b>770 ₽</b>
-  </div>
-  <div class='cart__item-remove'>
-    <div class='button button--outline button--circle'><RemoveCartSvg/></div>
-  </div>
-  </div>
+  const dispatch = useDispatch()
+
+  const onClickPlus = () => {
+    dispatch(addItem({ id }))
+  }
+
+  const onClickMinus = () => {
+    dispatch(minusItem(id))
+  }
+
+  const onClickRemove = () => {
+    if (window.confirm('Вы точно хотите удалить товар?')) {
+      dispatch(removeItem(id))
+    }
+  }
+
+  return (
+    <div className='cart__item'>
+      <div className='cart__item-img'>
+        <img
+          className='pizza-block__image'
+          src={imageUrl}
+          alt='Pizza'
+        />
+      </div>
+      <div className='cart__item-info'>
+        <h3>{name}</h3>
+        <p>{type}, {size} см.</p>
+      </div>
+      <div className='cart__item-count'>
+        <div onClick={onClickMinus} className='button button--outline button--circle cart__item-count-minus'><MinusCartSvg /></div>
+        <b>{count}</b>
+        <div onClick={onClickPlus} className='button button--outline button--circle cart__item-count-plus'><PlusCartSvg /></div>
+      </div>
+      <div className='cart__item-price'>
+        <b>{price * count} ₽</b>
+      </div>
+      <div onClick={onClickRemove} className='cart__item-remove'>
+        <div className='button button--outline button--circle'><RemoveCartSvg /></div>
+      </div>
+    </div>
   )
 }
