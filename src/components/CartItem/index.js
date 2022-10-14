@@ -8,11 +8,7 @@ export default function InfoBox({
   id = 0,
   imageUrl = '',
   name = '',
-  types = [],
-  sizes = [],
   price = 0,
-  category = 0,
-  rating = 0,
   count = 0,
   type,
   size
