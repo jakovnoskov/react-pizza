@@ -1,10 +1,11 @@
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { selectCart } from '../../redux/slices/cartSlice'
 import CartSvg from '../../svg/CartSvg'
 import LogoPizzaSvg from '../../svg/LogoPizzaSvg'
 
 export default function Header() {
-  const { items, totalPrice } = useSelector(state => state.cart)
+  const { items, totalPrice } = useSelector(selectCart)
   const totalCount = items.reduce((sum, item) => sum + item.count, 0)
   return (
     <header className='header'>

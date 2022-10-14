@@ -1,4 +1,16 @@
 .root {
+  @media (max-width: 980px) {
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+
+    li {
+      a {
+        margin: 0 4px;
+      }
+    }
+  }
+
   li {
     display: inline-block;
 

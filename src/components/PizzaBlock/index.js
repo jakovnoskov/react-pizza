@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { addItem } from '../../redux/slices/cartSlice'
+import { addItem, selectCartItemById } from '../../redux/slices/cartSlice'
 import { useSelector, useDispatch } from 'react-redux'
 import PlusSvg from '../../svg/PlusSvg'
 
@@ -12,11 +12,9 @@ export default function PizzaBlock({
   types = [],
   sizes = [],
   price = 0,
-  category = 0,
-  rating = 0
 }) {
   const dispatch = useDispatch()
-  const cartItem = useSelector(state => state.cart.items.find(obj => obj.id === id))
+  const cartItem = useSelector(selectCartItemById(id))
 
   const addedCount = cartItem ? cartItem.count : 0
 
