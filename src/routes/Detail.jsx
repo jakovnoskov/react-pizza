@@ -41,6 +41,7 @@ export default function Detail() {
         setPizza(data)
       } catch (error) {
         alert('Ошибка при получении пицы!')
+        navigate('/')
       }
     }
     fetchPizza()
