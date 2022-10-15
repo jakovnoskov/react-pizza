@@ -11,7 +11,6 @@ export default function Cart() {
   const dispatch = useDispatch()
   const { totalPrice, items } = useSelector(state => state.cart)
   const totalCount = items.reduce((sum, item) => sum + item.count, 0)
-
   const onClickClear = () => {
     if (window.confirm('Очистить корзину?')) {
       dispatch(clearItems())

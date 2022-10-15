@@ -1,3 +1,4 @@
+import { createHashRouter } from 'react-router-dom'
 import Root from './Root'
 import Catalog from './Catalog'
 import Cart from './Cart'
@@ -5,36 +6,38 @@ import FullPizza from './FullPizza'
 import Orders from './Orders'
 import NotFound from './NotFound'
 import ErrorPage from './ErrorPage'
-import {createHashRouter} from 'react-router-dom'
+import Detail from './Detail'
 
-const router = createHashRouter([
+export const router = createHashRouter([
   {
     path: '',
-    element: <Root/>,
-    errorElement: <ErrorPage/>,
+    element: <Root />,
+    errorElement: <ErrorPage />,
     children: [
       {
         path: '*',
-        element: <NotFound/>,
+        element: <NotFound />,
       },
       {
         path: '/',
-        element: <Catalog/>,
+        element: <Catalog />,
+      },
+      {
+        path: 'pizza/:id',
+        element: <Detail />,
       },
       {
         path: 'orders',
-        element: <Orders/>,
+        element: <Orders />,
       },
       {
         path: 'cart',
-        element: <Cart/>,
+        element: <Cart />,
       },
       {
         path: 'fullPizza',
-        element: <FullPizza/>,
+        element: <FullPizza />,
       },
     ],
   },
-])
-
-export default router
+]) 

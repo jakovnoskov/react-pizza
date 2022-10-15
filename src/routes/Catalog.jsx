@@ -30,13 +30,13 @@ export default function Catalog() {
     const order = sort.sortProperty.includes('-') ? 'asc' : 'desc'
     const categoryId = category.id > 0 ? String(category.id) : ''
     const search = searchValue
-    console.log({
-      sortBy,
-      order,
-      categoryId,
-      search,
-      currentPage,
-    })
+    // console.log({
+    //   sortBy,
+    //   order,
+    //   categoryId,
+    //   search,
+    //   currentPage,
+    // })
 
     dispatch(
       fetchPizzas({
