@@ -20,7 +20,8 @@ export default function InfoBox({
   }
 
   const onClickMinus = () => {
-    dispatch(minusItem(id))
+    if (count === 1) onClickRemove()
+    if (count > 1) dispatch(minusItem(id))
   }
 
   const onClickRemove = () => {
@@ -44,7 +45,7 @@ export default function InfoBox({
       </div>
       <div className='cart__item-count'>
         <button
-          disabled={count === 1}
+          disabled={count === 0}
           onClick={onClickMinus}
           className='button button--outline button--circle cart__item-count-minus'>
           <MinusCartSvg />
