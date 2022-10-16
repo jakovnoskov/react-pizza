@@ -1,14 +1,23 @@
 import { useState, useEffect } from 'react'
 import { addItem, selectCartItemById } from '../redux/slices/cartSlice'
-import GlobalLoader from "../components/GlobalLoader";
+import { GlobalLoader } from '../components/GlobalLoader'
 import { useSelector, useDispatch } from 'react-redux'
 import PlusSvg from '../svg/PlusSvg'
-import { useParams, useNavigate } from "react-router-dom"
+import { useParams, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
 const typeNames = ['тонкое', 'традиционное']
 
-export default function Detail() {
+type PizzaItem = {
+  id: string,
+  imageUrl: string,
+  name: string,
+  types: number[],
+  sizes: number[],
+  price: number,
+}
+
+export const Detail: React.FC = () => {
   const params = useParams()
   const navigate = useNavigate()
   const dispatch = useDispatch()
@@ -18,10 +27,17 @@ export default function Detail() {
 
   const [activeType, setactiveType] = useState(0)
   const [activeSize, setActiveSize] = useState(0)
-  const [pizza, setPizza] = useState(0)
+  const [pizza, setPizza] = useState<PizzaItem>({
+    "id": '0',
+    "imageUrl": '',
+    "name": '',
+    "types": [],
+    "sizes": [],
+    "price": 0,
+  })
 
-  const onClickSize = (i) => setActiveSize(i)
-  const onClickType = (i) => setactiveType(i)
+  const onClickSize = (i: number) => setActiveSize(i)
+  const onClickType = (i: number) => setactiveType(i)
   const onClickAdd = () => {
     const item = {
       id: pizza.id,
@@ -47,9 +63,7 @@ export default function Detail() {
     fetchPizza()
   }, [])
 
-  if (!pizza) {
-    return <GlobalLoader />;
-  }
+  if (!pizza) return <GlobalLoader smalMode={false} />
 
   return (
     <div className='content'>

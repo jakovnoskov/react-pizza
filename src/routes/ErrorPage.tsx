@@ -1,13 +1,15 @@
+import React from 'react'
 import { useRouteError } from 'react-router-dom'
-import InfoBox from '../components/InfoBox'
+import { InfoBox } from '../components/InfoBox'
 
-export default function ErrorPage() {
-  const error = useRouteError()
-  console.error(error)
+//type Ierror = {}
 
+export const ErrorPage: React.FC = () => {
+  const error: any = useRouteError()
+  console.log(error)
   return <InfoBox
     title='Извините, произошла непредвиденная ошибка.'
-    description={error.statusText || error.message}
+    description={error?.statusText || error?.message}
     buttonTitle='Вернуться назад'
     icon='😕'
     img='/img/empty-cart.png'

@@ -1,4 +1,4 @@
-import { useRef, useState, useCallback } from 'react'
+import React, { useRef, useState, useCallback } from 'react'
 import SearchSvg from '../../svg/SearchSvg'
 import ClearSearchSvg from '../../svg/ClearSearchSvg'
 import { useDispatch } from 'react-redux'
@@ -7,10 +7,10 @@ import debounce from 'lodash.debounce'
 import styles from './Search.module.scss'
 import { setSearchValue } from '../../redux/slices/filterSlice'
 
-export const Search = () => {
+export const Search: React.FC = () => {
   const dispatch = useDispatch()
-  const [value, setValue] = useState('')
-  const inputRef = useRef(null)
+  const [value, setValue] = useState<string>('')
+  const inputRef = useRef<HTMLInputElement>(null)
 
   const onClickClear = () => {
     dispatch(setSearchValue(''))
@@ -19,29 +19,29 @@ export const Search = () => {
   }
 
   const updateSearchValue = useCallback(
-    debounce((str) => {
+    debounce((str: string) => {
       dispatch(setSearchValue(str))
     }, 300),
     [],
   )
 
-  const onChangeInput = (event) => {
+  const onChangeInput = (event: any) => {
     setValue(event.target.value)
     updateSearchValue(event.target.value)
   }
 
   return (
     <div className={styles.root}>
-      <SearchSvg stylesIcon={styles.icon}/>
-        <input
-          ref={inputRef}
-          value={value}
-          onChange={onChangeInput}
-          className={styles.input} 
-          placeholder='Поиск пиццы...'
-        />
-      <ClearSearchSvg 
-        onClickClear={onClickClear} 
+      <SearchSvg stylesIcon={styles.icon} />
+      <input
+        ref={inputRef}
+        value={value}
+        onChange={onChangeInput}
+        className={styles.input}
+        placeholder='Поиск пиццы...'
+      />
+      <ClearSearchSvg
+        onClickClear={onClickClear}
         stylesIcon={styles.clearIcon}
       />
     </div>

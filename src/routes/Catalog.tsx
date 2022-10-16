@@ -1,27 +1,27 @@
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import Сategories from '../components/Сategories'
-import Sort from '../components/Sort'
-import PizzaBlock from '../components/PizzaBlock'
+import { Сategories } from '../components/Сategories'
+import { Sort } from '../components/Sort'
+import { PizzaBlock } from '../components/PizzaBlock'
 import { Skeleton } from '../components/PizzaBlock/Skeleton'
 import { Search } from '../components/Search'
 import { Pagination } from '../components/Pagination'
 import { selectFilter, setCategory, setCurrentPage } from '../redux/slices/filterSlice'
 import { fetchPizzas, selectPizzaData } from '../redux/slices/pizzaSlice'
-import InfoBox from '../components/InfoBox'
+import { InfoBox } from '../components/InfoBox'
 
-export default function Catalog() {
+export const Catalog: React.FC = () => {
   const dispatch = useDispatch()
   //const dispatch = useAppDispatch();
 
   const { category, sort, currentPage, searchValue } = useSelector(selectFilter)
   const { items, status } = useSelector(selectPizzaData)
 
-  const onChangeCategory = (obj) => {
-    dispatch(setCategory(obj))
+  const onChangeCategory = (idx: number) => {
+    dispatch(setCategory(idx))
   }
 
-  const onChangePage = (page) => {
+  const onChangePage = (page: number) => {
     dispatch(setCurrentPage(page))
   }
 
@@ -39,6 +39,7 @@ export default function Catalog() {
     // })
 
     dispatch(
+      // @ts-ignore
       fetchPizzas({
         sortBy,
         order,
@@ -47,14 +48,14 @@ export default function Catalog() {
         currentPage,
       }),
     )
-    window.scrollTo(0, 0);
+    window.scrollTo(0, 0)
   }
 
   useEffect(() => {
     getPizzas()
   }, [category.id, sort.sortProperty, searchValue, currentPage])
 
-  const pizzas = items.map((obj) => <PizzaBlock key={obj.id} {...obj} />)
+  const pizzas = items.map((obj: any) => <PizzaBlock key={obj.id} {...obj} />)
   const skeletons = [...new Array(4)].map((_, index) => <Skeleton key={index} />)
 
   return (
@@ -66,6 +67,8 @@ export default function Catalog() {
             description='К сожалению, не удалось получить питсы. Попробуйте повторить попытку позже.'
             buttonTitle='Вернуться назад'
             icon='😕'
+            img=''
+            alt=''
           />
         ) : (
           <>

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { addItem, selectCartItemById } from '../../redux/slices/cartSlice'
 import { useSelector, useDispatch } from 'react-redux'
@@ -6,26 +6,35 @@ import PlusSvg from '../../svg/PlusSvg'
 
 const typeNames = ['тонкое', 'традиционное']
 
-export default function PizzaBlock({
-  id = 0,
+type PizzaBlockProps = {
+  id: string,
+  imageUrl: string,
+  name: string,
+  types: number[],
+  sizes: number[],
+  price: number,
+}
+
+export const PizzaBlock: React.FC<PizzaBlockProps> = ({
+  id = '0',
   imageUrl = '',
   name = '',
   types = [],
   sizes = [],
   price = 0,
-}) {
+}) => {
   const dispatch = useDispatch()
   const cartItem = useSelector(selectCartItemById(id))
 
   const addedCount = cartItem ? cartItem.count : 0
 
-  const [activeType, setactiveType] = useState(0)
-  const [activeSize, setActiveSize] = useState(0)
-  const onClickSize = (i) => {
+  const [activeType, setactiveType] = useState<number>(0)
+  const [activeSize, setActiveSize] = useState<number>(0)
+  const onClickSize = (i: number) => {
     setActiveSize(i)
   }
 
-  const onClickType = (i) => {
+  const onClickType = (i: number) => {
     setactiveType(i)
   }
 

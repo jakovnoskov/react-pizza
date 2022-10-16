@@ -1,14 +1,14 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import InfoBox from '../components/InfoBox'
-import CartItem from '../components/CartItem'
+import { InfoBox } from '../components/InfoBox'
+import { CartItem } from '../components/CartItem'
 import CartPageSvg from '../svg/CartPageSvg'
 import BasketSvg from '../svg/BasketSvg'
 import BackArrowSvg from '../svg/BackArrowSvg'
 import { useSelector, useDispatch } from 'react-redux'
 import { clearItems, selectCart } from '../redux/slices/cartSlice'
 
-export default function Cart() {
+export const Cart: React.FC = () => {
   const dispatch = useDispatch()
   const { totalCount, totalPrice, items } = useSelector(selectCart)
   const onClickClear = () => {
@@ -18,29 +18,29 @@ export default function Cart() {
   }
 
   return (
-    <div className="content">
+    <div className='content'>
       {items.length > 0 ? (
-        <div className="container container--cart">
-          <div className="cart">
-            <div className="cart__top">
-              <h2 className="content__title"><CartPageSvg />Корзина</h2>
-              <div onClick={onClickClear} className="cart__clear"><BasketSvg /><span>Очистить корзину</span></div>
+        <div className='container container--cart'>
+          <div className='cart'>
+            <div className='cart__top'>
+              <h2 className='content__title'><CartPageSvg />Корзина</h2>
+              <div onClick={onClickClear} className='cart__clear'><BasketSvg /><span>Очистить корзину</span></div>
             </div>
-            <div className="content__items">
-              {items.map((item, i) =>
-                <CartItem key={i} {...item} />)
+            <div className='content__items'>
+              {items.map((item: any) =>
+                <CartItem key={item.id} {...item} />)
               }
             </div>
-            <div className="cart__bottom">
-              <div className="cart__bottom-details">
+            <div className='cart__bottom'>
+              <div className='cart__bottom-details'>
                 <span> Всего пицц: <b>{totalCount} шт.</b> </span>
                 <span> Сумма заказа: <b>{totalPrice} ₽</b> </span>
               </div>
-              <div className="cart__bottom-buttons">
-                <Link to={`/`} className="button button--outline button--add go-back-btn">
+              <div className='cart__bottom-buttons'>
+                <Link to={`/`} className='button button--outline button--add go-back-btn'>
                   <BackArrowSvg /><span>Вернуться назад</span>
                 </Link>
-                <div className="button pay-btn">
+                <div className='button pay-btn'>
                   <span>Оплатить сейчас</span>
                 </div>
               </div>

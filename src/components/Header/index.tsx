@@ -1,10 +1,11 @@
+import React from 'react'
 import { useSelector } from 'react-redux'
 import { Link, useLocation } from 'react-router-dom'
 import { selectCart } from '../../redux/slices/cartSlice'
 import CartSvg from '../../svg/CartSvg'
 import LogoPizzaSvg from '../../svg/LogoPizzaSvg'
 
-export default function Header() {
+export const Header: React.FC = () => {
   const { pathname } = useLocation()
   const { totalPrice, totalCount } = useSelector(selectCart)
   return (

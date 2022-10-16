@@ -1,18 +1,29 @@
+import React from 'react'
 import MinusCartSvg from '../../svg/MinusCartSvg'
 import PlusCartSvg from '../../svg/PlusCartSvg'
 import RemoveCartSvg from '../../svg/RemoveCartSvg'
 import { useDispatch } from 'react-redux'
 import { addItem, minusItem, removeItem } from '../../redux/slices/cartSlice'
 
-export default function InfoBox({
-  id = 0,
+type CartItemProps = {
+  id: string,
+  imageUrl: string,
+  name: string,
+  price: number,
+  count: number,
+  type: string,
+  size: string,
+}
+
+export const CartItem: React.FC<CartItemProps> = ({
+  id = '0',
   imageUrl = '',
   name = '',
   price = 0,
   count = 0,
   type,
-  size
-}) {
+  size,
+}) => {
   const dispatch = useDispatch()
 
   const onClickPlus = () => {

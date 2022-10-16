@@ -1,7 +1,8 @@
-import { useRouteError } from "react-router-dom"
-import InfoBox from "../components/InfoBox"
+import React from 'react'
+import { useRouteError } from 'react-router-dom'
+import { InfoBox } from '../components/InfoBox'
 
-export default function NotFound() {
+export const NotFound: React.FC = () => {
   const error = useRouteError()
   console.error(error)
 
