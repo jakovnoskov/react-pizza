@@ -1,12 +1,11 @@
 import { createHashRouter } from 'react-router-dom'
-import Root from './Root'
+import { Root } from './Root'
 import Catalog from './Catalog'
+import Detail from './Detail'
 import Cart from './Cart'
-import FullPizza from './FullPizza'
-import Orders from './Orders'
+import { Orders } from './Orders'
 import NotFound from './NotFound'
 import ErrorPage from './ErrorPage'
-import Detail from './Detail'
 
 export const router = createHashRouter([
   {
@@ -33,10 +32,6 @@ export const router = createHashRouter([
       {
         path: 'cart',
         element: <Cart />,
-      },
-      {
-        path: 'fullPizza',
-        element: <FullPizza />,
       },
     ],
   },

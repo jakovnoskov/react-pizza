@@ -43,9 +43,18 @@ export default function InfoBox({
         <p>{type}, {size} см.</p>
       </div>
       <div className='cart__item-count'>
-        <div onClick={onClickMinus} className='button button--outline button--circle cart__item-count-minus'><MinusCartSvg /></div>
+        <button
+          disabled={count === 1}
+          onClick={onClickMinus}
+          className='button button--outline button--circle cart__item-count-minus'>
+          <MinusCartSvg />
+        </button>
         <b>{count}</b>
-        <div onClick={onClickPlus} className='button button--outline button--circle cart__item-count-plus'><PlusCartSvg /></div>
+        <button
+          onClick={onClickPlus}
+          className='button button--outline button--circle cart__item-count-plus'>
+          <PlusCartSvg />
+        </button>
       </div>
       <div className='cart__item-price'>
         <b>{price * count} ₽</b>

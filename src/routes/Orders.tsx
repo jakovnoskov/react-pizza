@@ -1,9 +1,9 @@
 import React from 'react'
 
-export default function Orders() {
+export const Orders: React.FC = () => {
   return (
     <div className="App">
-        <h1>O R D E R</h1>
+      <h1>O R D E R</h1>
 
     </div>
   )

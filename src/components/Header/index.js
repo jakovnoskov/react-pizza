@@ -6,8 +6,7 @@ import LogoPizzaSvg from '../../svg/LogoPizzaSvg'
 
 export default function Header() {
   const { pathname } = useLocation()
-  const { items, totalPrice } = useSelector(selectCart)
-  const totalCount = items.reduce((sum, item) => sum + item.count, 0)
+  const { totalPrice, totalCount } = useSelector(selectCart)
   return (
     <header className='header'>
       <div className='container'>

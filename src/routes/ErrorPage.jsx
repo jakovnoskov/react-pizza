@@ -6,11 +6,11 @@ export default function ErrorPage() {
   console.error(error)
 
   return <InfoBox
-      title = 'Извините, произошла непредвиденная ошибка.'
-      description = {error.statusText || error.message}
-      buttonTitle = 'Вернуться назад'
-      icon='😕'
-      img='/img/empty-cart.png'
-      alt='Упс!'
-    />
+    title='Извините, произошла непредвиденная ошибка.'
+    description={error.statusText || error.message}
+    buttonTitle='Вернуться назад'
+    icon='😕'
+    img='/img/empty-cart.png'
+    alt='Упс!'
+  />
 }
