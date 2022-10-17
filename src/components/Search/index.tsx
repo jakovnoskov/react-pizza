@@ -32,7 +32,7 @@ export const Search: React.FC = () => {
 
   return (
     <div className={styles.root}>
-      <SearchSvg stylesIcon={styles.icon} />
+      <SearchSvg />
       <input
         ref={inputRef}
         value={value}
@@ -42,7 +42,6 @@ export const Search: React.FC = () => {
       />
       <ClearSearchSvg
         onClickClear={onClickClear}
-        stylesIcon={styles.clearIcon}
       />
     </div>
   )

@@ -16,6 +16,29 @@ body {
   border-radius: 10px;
   max-width: 1400px;
 
+  .icon {
+    width: 22px;
+    height: 22px;
+    opacity: 0.3;
+    position: absolute;
+    left: 14px;
+    top: 12px;
+  }
+
+  .clearIcon {
+    width: 18px;
+    height: 18px;
+    opacity: 0.3;
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    cursor: pointer;
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+
   @media (max-width:720px) {
     width: 100%;
     margin: 0;
@@ -551,7 +574,8 @@ body {
       top: 2px;
     }
 
-    img {
+    img,
+    svg {
       display: block;
       width: 300px;
       margin: 45px auto 60px;

@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import cartEmptyImg from '../../assets/img/empty-cart.png'
+import EmptyCart from '../../svg/EmptyCart'
 
 type InfoBoxProps = {
   title: string,
@@ -30,7 +30,8 @@ export const InfoBox: React.FC<InfoBoxProps> = (
           <p>{description}</p>
           {icon ?
             <p className='cart--icon'>{icon}</p> :
-            <img src={img ? img : cartEmptyImg} alt={alt} />
+            img ? <img src={img} alt={alt} /> :
+              <EmptyCart />
           }
           <Link to={`/`}>
             <button className='button button--black'>
