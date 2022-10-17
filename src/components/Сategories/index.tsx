@@ -1,22 +1,42 @@
 import React from 'react'
 
-type СategoriesProps = {
-  value: number,
-  onChangeCategory: any
+type CategoryItem = {
+  id: number
+  name: string
 }
 
-export const Сategories: React.FC<СategoriesProps> = ({ value, onChangeCategory }) => {
+export const categoriesList: CategoryItem[] = [
+  { id: 1, name: 'Все' },
+  { id: 2, name: 'Мясные' },
+  { id: 3, name: 'Вегетарианские' },
+  { id: 4, name: 'Гриль' },
+  { id: 5, name: 'Острые' },
+  { id: 6, name: 'Закрытые' },
+]
 
-  const categories = ['Все', 'Мясные', 'Вегетарианские', 'Гриль', 'Острые', 'Закрытые']
+type СategoriesProps = {
+  value: CategoryItem
+  onChangeCategory: (idx: CategoryItem) => void
+}
+
+export const Сategories: React.FC<СategoriesProps> = ({
+  value,
+  onChangeCategory
+}) => {
+
   return (
     <div className='categories'>
       <ul>
-        {categories.map((categoryName, i) => (
+        {categoriesList.map((obj, i) => (
           <li
             key={i}
-            onClick={() => onChangeCategory({ name: categoryName, id: i })}
-            className={value === i ? 'active' : ''}>
-            {categoryName}
+            onClick={() => onChangeCategory(obj)}
+            className={
+              value.id === i ?
+                'active' :
+                ''
+            }>
+            {obj.name}
           </li>
         ))}
       </ul>

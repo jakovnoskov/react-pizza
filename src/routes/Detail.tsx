@@ -15,6 +15,7 @@ type PizzaItem = {
   types: number[],
   sizes: number[],
   price: number,
+  count: number,
 }
 
 export const Detail: React.FC = () => {
@@ -22,11 +23,12 @@ export const Detail: React.FC = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
-  const cartItem = useSelector(selectCartItemById(params.id))
+  const cartItem = useSelector(selectCartItemById(params.id as string))
   const addedCount = cartItem ? cartItem.count : 0
 
   const [activeType, setactiveType] = useState(0)
   const [activeSize, setActiveSize] = useState(0)
+  const [loading, setLoading] = useState(true)
   const [pizza, setPizza] = useState<PizzaItem>({
     "id": '0',
     "imageUrl": '',
@@ -34,6 +36,7 @@ export const Detail: React.FC = () => {
     "types": [],
     "sizes": [],
     "price": 0,
+    "count": 0,
   })
 
   const onClickSize = (i: number) => setActiveSize(i)
@@ -46,6 +49,7 @@ export const Detail: React.FC = () => {
       imageUrl: pizza.imageUrl,
       type: typeNames[activeType],
       size: pizza.sizes[activeSize],
+      count: pizza.count,
     }
     dispatch(addItem(item))
   }
@@ -55,7 +59,9 @@ export const Detail: React.FC = () => {
       try {
         const { data } = await axios.get(`https://63448999dcae733e8fe1045c.mockapi.io/items/${params.id}`)
         setPizza(data)
+        setLoading(false)
       } catch (error) {
+        setLoading(false)
         alert('Ошибка при получении пицы!')
         navigate('/')
       }
@@ -63,7 +69,7 @@ export const Detail: React.FC = () => {
     fetchPizza()
   }, [])
 
-  if (!pizza) return <GlobalLoader smalMode={false} />
+  if (loading) return <GlobalLoader smalMode={false} />
 
   return (
     <div className='content'>

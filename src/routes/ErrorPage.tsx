@@ -2,17 +2,21 @@ import React from 'react'
 import { useRouteError } from 'react-router-dom'
 import { InfoBox } from '../components/InfoBox'
 
-//type Ierror = {}
+type Ierror = {
+  statusText: string
+  message: string
+}
+type errorType = ReturnType<typeof useRouteError>
 
 export const ErrorPage: React.FC = () => {
-  const error: any = useRouteError()
-  console.log(error)
+  const error: errorType = useRouteError()
+  let errorMessage = error as errorType as Ierror
+
   return <InfoBox
     title='Извините, произошла непредвиденная ошибка.'
-    description={error?.statusText || error?.message}
+    description={errorMessage.statusText || errorMessage.message}
     buttonTitle='Вернуться назад'
     icon='😕'
-    img='/img/empty-cart.png'
     alt='Упс!'
   />
 }

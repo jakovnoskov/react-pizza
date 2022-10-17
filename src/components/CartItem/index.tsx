@@ -4,6 +4,7 @@ import PlusCartSvg from '../../svg/PlusCartSvg'
 import RemoveCartSvg from '../../svg/RemoveCartSvg'
 import { useDispatch } from 'react-redux'
 import { addItem, minusItem, removeItem } from '../../redux/slices/cartSlice'
+import { CartItem as CartItemType } from '../../redux/cart/types'
 
 type CartItemProps = {
   id: string,
@@ -27,7 +28,11 @@ export const CartItem: React.FC<CartItemProps> = ({
   const dispatch = useDispatch()
 
   const onClickPlus = () => {
-    dispatch(addItem({ id }))
+    dispatch(
+      addItem({
+        id,
+      } as CartItemType),
+    )
   }
 
   const onClickMinus = () => {

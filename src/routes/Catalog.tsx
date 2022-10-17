@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from 'react'
+import qs from 'qs'
 import { useSelector, useDispatch } from 'react-redux'
-import { Сategories } from '../components/Сategories'
-import { Sort } from '../components/Sort'
+import { categoriesList, Сategories } from '../components/Сategories'
+import { sortList, Sort } from '../components/Sort'
 import { PizzaBlock } from '../components/PizzaBlock'
 import { Skeleton } from '../components/PizzaBlock/Skeleton'
 import { Search } from '../components/Search'
 import { Pagination } from '../components/Pagination'
-import { selectFilter, setCategory, setCurrentPage } from '../redux/slices/filterSlice'
+import { selectFilter, setCategory, setCurrentPage, Category, setFilters } from '../redux/slices/filterSlice'
 import { fetchPizzas, selectPizzaData } from '../redux/slices/pizzaSlice'
 import { InfoBox } from '../components/InfoBox'
+import { SearchPizzaParams } from '../redux/pizza/types'
+
 
 export const Catalog: React.FC = () => {
   const dispatch = useDispatch()
@@ -17,7 +20,7 @@ export const Catalog: React.FC = () => {
   const { category, sort, currentPage, searchValue } = useSelector(selectFilter)
   const { items, status } = useSelector(selectPizzaData)
 
-  const onChangeCategory = (idx: number) => {
+  const onChangeCategory = (idx: Category) => {
     dispatch(setCategory(idx))
   }
 
@@ -30,6 +33,7 @@ export const Catalog: React.FC = () => {
     const order = sort.sortProperty.includes('-') ? 'asc' : 'desc'
     const categoryId = category.id > 0 ? String(category.id) : ''
     const search = searchValue
+    const page = String(currentPage)
     // console.log({
     //   sortBy,
     //   order,
@@ -45,7 +49,7 @@ export const Catalog: React.FC = () => {
         order,
         categoryId,
         search,
-        currentPage,
+        page,
       }),
     )
     window.scrollTo(0, 0)
@@ -54,6 +58,25 @@ export const Catalog: React.FC = () => {
   useEffect(() => {
     getPizzas()
   }, [category.id, sort.sortProperty, searchValue, currentPage])
+
+  // Парсим параметры при первом рендере
+  useEffect(() => {
+    if (window.location.search) {
+      const params = qs.parse(window.location.search.substring(1)) as unknown as SearchPizzaParams
+      const sort = sortList.find((obj) => obj.sortProperty === params.sortBy)
+      const category = categoriesList.find((obj) => obj.id === Number(params.category))
+
+      dispatch(
+        setFilters({
+          searchValue: params.search,
+          category: category || categoriesList[0],
+          currentPage: Number(params.currentPage),
+          sort: sort || sortList[0],
+        }),
+      )
+    }
+    //isMounted.current = true;
+  }, []);
 
   const pizzas = items.map((obj: any) => <PizzaBlock key={obj.id} {...obj} />)
   const skeletons = [...new Array(4)].map((_, index) => <Skeleton key={index} />)
@@ -67,13 +90,12 @@ export const Catalog: React.FC = () => {
             description='К сожалению, не удалось получить питсы. Попробуйте повторить попытку позже.'
             buttonTitle='Вернуться назад'
             icon='😕'
-            img=''
-            alt=''
+            alt='Произошла ошибка'
           />
         ) : (
           <>
             <div className='content__top'>
-              <Сategories value={category.id} onChangeCategory={onChangeCategory} />
+              <Сategories value={category} onChangeCategory={onChangeCategory} />
               <Sort />
             </div>
             <div className='info__wrapper'>

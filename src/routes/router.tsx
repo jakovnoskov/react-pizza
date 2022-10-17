@@ -13,10 +13,10 @@ export const router = createHashRouter([
     element: <Root />,
     errorElement: <ErrorPage />,
     children: [
-      {
-        path: '*',
-        element: <NotFound />,
-      },
+      // {
+      //   path: '*',
+      //   element: <NotFound />,
+      // },
       {
         path: '/',
         element: <Catalog />,
