@@ -1,13 +1,23 @@
-import React from 'react'
+import { useEffect, useRef } from 'react'
 import { useSelector } from 'react-redux'
 import { Link, useLocation } from 'react-router-dom'
-import { selectCart } from '../../redux/slices/cartSlice'
+import { selectCart } from '../../redux/cart/selectors'
 import CartSvg from '../../svg/CartSvg'
 import LogoPizzaSvg from '../../svg/LogoPizzaSvg'
 
 export const Header: React.FC = () => {
   const { pathname } = useLocation()
-  const { totalPrice, totalCount } = useSelector(selectCart)
+  const { items, totalPrice, totalCount } = useSelector(selectCart)
+  const isMounted = useRef(false)
+
+  useEffect(() => {
+    if (isMounted.current) {
+      const json = JSON.stringify(items)
+      localStorage.setItem('cart', json)
+    }
+    isMounted.current = true
+  }, [items])
+
   return (
     <header className='header'>
       <div className='container'>

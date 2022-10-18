@@ -7,11 +7,14 @@ import { PizzaBlock } from '../components/PizzaBlock'
 import { Skeleton } from '../components/PizzaBlock/Skeleton'
 import { Search } from '../components/Search'
 import { Pagination } from '../components/Pagination'
-import { selectFilter, setCategory, setCurrentPage, Category, setFilters } from '../redux/slices/filterSlice'
-import { fetchPizzas, selectPizzaData } from '../redux/slices/pizzaSlice'
+import { setCategory, setCurrentPage, setFilters } from '../redux/filter/slice'
 import { InfoBox } from '../components/InfoBox'
 import { SearchPizzaParams } from '../redux/pizza/types'
 import { useAppDispatch } from '../redux/store'
+import { selectFilter } from '../redux/filter/selectors'
+import { Category } from '../redux/filter/types'
+import { fetchPizzas } from '../redux/pizza/asyncActions'
+import { selectPizzaData } from '../redux/pizza/selectors'
 
 
 export const Catalog: React.FC = () => {
@@ -35,7 +38,6 @@ export const Catalog: React.FC = () => {
     const order = sort.sortProperty.includes('-') ? 'asc' : 'desc'
     const categoryId = category.id > 0 ? String(category.id) : ''
     const search = searchValue
-    const page = String(currentPage)
 
     dispatch(
       fetchPizzas({
@@ -43,7 +45,7 @@ export const Catalog: React.FC = () => {
         order,
         categoryId,
         search,
-        page,
+        currentPage: String(currentPage),
       }),
     )
     window.scrollTo(0, 0)
@@ -58,7 +60,7 @@ export const Catalog: React.FC = () => {
     if (window.location.search) {
       const params = qs.parse(window.location.search.substring(1)) as unknown as SearchPizzaParams
       const sort = sortList.find((obj) => obj.sortProperty === params.sortBy)
-      const category = categoriesList.find((obj) => obj.id === Number(params.category))
+      const category = categoriesList.find((obj) => obj.id === Number(params.categoryId))
 
       dispatch(
         setFilters({

@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react'
-import { addItem, selectCartItemById } from '../redux/slices/cartSlice'
+import { addItem } from '../redux/cart/slice'
 import { GlobalLoader } from '../components/GlobalLoader'
 import { useSelector, useDispatch } from 'react-redux'
 import PlusSvg from '../svg/PlusSvg'
 import { useParams, useNavigate } from 'react-router-dom'
 import axios from 'axios'
+import { selectCartItemById } from '../redux/cart/selectors'
 
 const typeNames = ['тонкое', 'традиционное']
 

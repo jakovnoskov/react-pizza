@@ -6,7 +6,8 @@ import CartPageSvg from '../svg/CartPageSvg'
 import BasketSvg from '../svg/BasketSvg'
 import BackArrowSvg from '../svg/BackArrowSvg'
 import { useSelector, useDispatch } from 'react-redux'
-import { clearItems, selectCart } from '../redux/slices/cartSlice'
+import { clearItems } from '../redux/cart/slice'
+import { selectCart } from '../redux/cart/selectors'
 
 export const Cart: React.FC = () => {
   const dispatch = useDispatch()

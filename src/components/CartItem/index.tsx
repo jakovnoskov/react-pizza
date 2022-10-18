@@ -1,9 +1,10 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import MinusCartSvg from '../../svg/MinusCartSvg'
 import PlusCartSvg from '../../svg/PlusCartSvg'
 import RemoveCartSvg from '../../svg/RemoveCartSvg'
 import { useDispatch } from 'react-redux'
-import { addItem, minusItem, removeItem } from '../../redux/slices/cartSlice'
+import { addItem, minusItem, removeItem } from '../../redux/cart/slice'
 import { CartItem as CartItemType } from '../../redux/cart/types'
 
 type CartItemProps = {
@@ -48,17 +49,23 @@ export const CartItem: React.FC<CartItemProps> = ({
 
   return (
     <div className='cart__item'>
+
       <div className='cart__item-img'>
-        <img
-          className='pizza-block__image'
-          src={imageUrl}
-          alt='Pizza'
-        />
+        <Link key={id} to={`/pizza/${id}`}>
+          <img
+            className='pizza-block__image'
+            src={imageUrl}
+            alt='Pizza'
+          />
+        </Link>
       </div>
       <div className='cart__item-info'>
-        <h3>{name}</h3>
-        <p>{type}, {size} см.</p>
+        <Link key={id} to={`/pizza/${id}`}>
+          <h3>{name}</h3>
+          <p>{type}, {size} см.</p>
+        </Link>
       </div>
+
       <div className='cart__item-count'>
         <button
           disabled={count === 0}
