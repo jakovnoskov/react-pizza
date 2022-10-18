@@ -19,7 +19,7 @@ type СategoriesProps = {
   onChangeCategory: (idx: CategoryItem) => void
 }
 
-export const Сategories: React.FC<СategoriesProps> = ({
+export const Сategories: React.FC<СategoriesProps> = React.memo(({
   value,
   onChangeCategory
 }) => {
@@ -42,4 +42,4 @@ export const Сategories: React.FC<СategoriesProps> = ({
       </ul>
     </div>
   )
-}
+})

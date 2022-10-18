@@ -2,7 +2,7 @@ import React, { useRef, useEffect } from 'react'
 import qs from 'qs'
 import { useSelector, useDispatch } from 'react-redux'
 import { categoriesList, Сategories } from '../components/Сategories'
-import { sortList, Sort } from '../components/Sort'
+import { sortList, SortPopup } from '../components/Sort'
 import { PizzaBlock } from '../components/PizzaBlock'
 import { Skeleton } from '../components/PizzaBlock/Skeleton'
 import { Search } from '../components/Search'
@@ -22,9 +22,9 @@ export const Catalog: React.FC = () => {
   const { category, sort, currentPage, searchValue } = useSelector(selectFilter)
   const { items, status } = useSelector(selectPizzaData)
 
-  const onChangeCategory = (idx: Category) => {
+  const onChangeCategory = React.useCallback((idx: Category) => {
     dispatch(setCategory(idx))
-  }
+  }, [])
 
   const onChangePage = (page: number) => {
     dispatch(setCurrentPage(page))
@@ -90,7 +90,7 @@ export const Catalog: React.FC = () => {
           <>
             <div className='content__top'>
               <Сategories value={category} onChangeCategory={onChangeCategory} />
-              <Sort />
+              <SortPopup value={sort} />
             </div>
             <div className='info__wrapper'>
               <h2 className='content__title'>{category.name} пиццы</h2>
