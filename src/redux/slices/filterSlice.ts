@@ -21,7 +21,7 @@ interface FilterSliceState {
 const initialState: FilterSliceState = {
   searchValue: '',
   category: {
-    id: 0,
+    id: 1,
     name: 'Все',
   },
   currentPage: 1,

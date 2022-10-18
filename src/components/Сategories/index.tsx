@@ -27,12 +27,12 @@ export const Сategories: React.FC<СategoriesProps> = ({
   return (
     <div className='categories'>
       <ul>
-        {categoriesList.map((obj, i) => (
+        {categoriesList.map((obj) => (
           <li
-            key={i}
+            key={obj.id}
             onClick={() => onChangeCategory(obj)}
             className={
-              value.id === i ?
+              value.id === obj.id ?
                 'active' :
                 ''
             }>

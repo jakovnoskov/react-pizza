@@ -3,7 +3,6 @@ import axios from 'axios'
 import pickBy from 'lodash/pickBy'
 import identity from 'lodash/identity'
 import { RootState } from '../store'
-import { CartItem } from './cartSlice'
 
 type Pizza = {
   id: string,
@@ -14,14 +13,28 @@ type Pizza = {
   price: number,
 }
 
+export enum Status {
+  LOADING = 'loading',
+  COMPLITED = 'completed',
+  ERROR = 'error',
+}
+
 interface PizzaSliceState {
   items: Pizza[]
-  status: 'loading' | 'completed' | 'error'
+  status: Status
 }
 
 const initialState: PizzaSliceState = {
   items: [],
-  status: 'loading', // loading | completed | error
+  status: Status.LOADING, // loading | completed | error
+}
+
+export type SearchPizzaParams = {
+  sortBy: string
+  order: string
+  category: string
+  search: string
+  currentPage: string
 }
 
 export const fetchPizzas = createAsyncThunk<Pizza[], Record<string, string>>('pizza/fetchPizzasStatus',
@@ -54,17 +67,17 @@ export const pizzaSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(fetchPizzas.pending, (state, action) => {
-      state.status = 'loading'
+      state.status = Status.LOADING
       state.items = []
     })
 
     builder.addCase(fetchPizzas.fulfilled, (state, action) => {
       state.items = action.payload
-      state.status = 'completed'
+      state.status = Status.COMPLITED
     })
 
     builder.addCase(fetchPizzas.rejected, (state, action) => {
-      state.status = 'error'
+      state.status = Status.ERROR
       state.items = []
     })
   },

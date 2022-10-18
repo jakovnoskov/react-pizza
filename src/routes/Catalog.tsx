@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useRef, useEffect } from 'react'
 import qs from 'qs'
 import { useSelector, useDispatch } from 'react-redux'
 import { categoriesList, Сategories } from '../components/Сategories'
@@ -11,11 +11,13 @@ import { selectFilter, setCategory, setCurrentPage, Category, setFilters } from 
 import { fetchPizzas, selectPizzaData } from '../redux/slices/pizzaSlice'
 import { InfoBox } from '../components/InfoBox'
 import { SearchPizzaParams } from '../redux/pizza/types'
+import { useAppDispatch } from '../redux/store'
 
 
 export const Catalog: React.FC = () => {
-  const dispatch = useDispatch()
-  //const dispatch = useAppDispatch();
+  //const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
+  const isMounted = useRef(false)
 
   const { category, sort, currentPage, searchValue } = useSelector(selectFilter)
   const { items, status } = useSelector(selectPizzaData)
@@ -34,16 +36,8 @@ export const Catalog: React.FC = () => {
     const categoryId = category.id > 0 ? String(category.id) : ''
     const search = searchValue
     const page = String(currentPage)
-    // console.log({
-    //   sortBy,
-    //   order,
-    //   categoryId,
-    //   search,
-    //   currentPage,
-    // })
 
     dispatch(
-      // @ts-ignore
       fetchPizzas({
         sortBy,
         order,

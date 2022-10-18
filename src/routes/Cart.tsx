@@ -17,6 +17,12 @@ export const Cart: React.FC = () => {
     }
   }
 
+  const onClickPay = () => {
+    if (window.confirm(`Вы заказали ${totalCount} пиц на сумму ${totalPrice} ₽`)) {
+      dispatch(clearItems())
+    }
+  }
+
   return (
     <div className='content'>
       {items.length > 0 ? (
@@ -40,9 +46,9 @@ export const Cart: React.FC = () => {
                 <Link to={`/`} className='button button--outline button--add go-back-btn'>
                   <BackArrowSvg /><span>Вернуться назад</span>
                 </Link>
-                <div className='button pay-btn'>
+                <button onClick={onClickPay} className='button pay-btn'>
                   <span>Оплатить сейчас</span>
-                </div>
+                </button>
               </div>
             </div>
           </div>
