@@ -43,7 +43,7 @@ export const Catalog: React.FC = () => {
       fetchPizzas({
         sortBy,
         order,
-        categoryId,
+        category: categoryId,
         search,
         currentPage: String(currentPage),
       }),
@@ -60,7 +60,7 @@ export const Catalog: React.FC = () => {
     if (window.location.search) {
       const params = qs.parse(window.location.search.substring(1)) as unknown as SearchPizzaParams
       const sort = sortList.find((obj) => obj.sortProperty === params.sortBy)
-      const category = categoriesList.find((obj) => obj.id === Number(params.categoryId))
+      const category = categoriesList.find((obj) => obj.id === Number(params.category))
 
       dispatch(
         setFilters({

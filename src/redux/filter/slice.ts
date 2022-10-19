@@ -4,7 +4,7 @@ import { Category, FilterSliceState, Sort, SortPropertyEnum } from './types'
 const initialState: FilterSliceState = {
   searchValue: '',
   category: {
-    id: 1,
+    id: 0,
     name: 'Все',
   },
   currentPage: 1,

@@ -13,6 +13,7 @@ type PizzaItem = {
   id: string,
   imageUrl: string,
   name: string,
+  description: string,
   types: number[],
   sizes: number[],
   price: number,
@@ -34,6 +35,7 @@ export const Detail: React.FC = () => {
     "id": '0',
     "imageUrl": '',
     "name": '',
+    "description": '',
     "types": [],
     "sizes": [],
     "price": 0,
@@ -46,6 +48,7 @@ export const Detail: React.FC = () => {
     const item = {
       id: pizza.id,
       name: pizza.name,
+      description: pizza.description,
       price: pizza.price,
       imageUrl: pizza.imageUrl,
       type: typeNames[activeType],
@@ -87,6 +90,7 @@ export const Detail: React.FC = () => {
             </div>
             <div className='pizza-detail-info'>
               <h4 className='pizza-block__title'>{pizza.name}</h4>
+              <div className='pizza-block__description'>{pizza.description}</div>
               <div className='pizza-block__selector'>
                 <ul>
                   {pizza.types.length >= 0 &&
