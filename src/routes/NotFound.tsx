@@ -2,7 +2,7 @@ import React from 'react'
 import { useRouteError } from 'react-router-dom'
 import { InfoBox } from '../components/InfoBox'
 
-export const NotFound: React.FC = () => {
+export default function NotFound() {
   const error = useRouteError()
   console.error(error)
 

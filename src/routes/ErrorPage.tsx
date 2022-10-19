@@ -8,7 +8,7 @@ type Ierror = {
 }
 type errorType = ReturnType<typeof useRouteError>
 
-export const ErrorPage: React.FC = () => {
+export default function ErrorPage() {
   const error: errorType = useRouteError()
   let errorMessage = error as errorType as Ierror
 

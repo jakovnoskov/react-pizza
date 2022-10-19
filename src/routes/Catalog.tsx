@@ -1,24 +1,18 @@
-import React, { useRef, useEffect } from 'react'
+import React, { useRef, useEffect, useLayoutEffect } from 'react'
 import qs from 'qs'
-import { useSelector, useDispatch } from 'react-redux'
-import { categoriesList, Сategories } from '../components/Сategories'
-import { sortList, SortPopup } from '../components/Sort'
-import { PizzaBlock } from '../components/PizzaBlock'
-import { Skeleton } from '../components/PizzaBlock/Skeleton'
-import { Search } from '../components/Search'
-import { Pagination } from '../components/Pagination'
+import { useSelector } from 'react-redux'
+import { categoriesList, Сategories, sortList, SortPopup, PizzaBlock, Skeleton, Search, Pagination, InfoBox } from '../components'
 import { setCategory, setCurrentPage, setFilters } from '../redux/filter/slice'
-import { InfoBox } from '../components/InfoBox'
 import { SearchPizzaParams } from '../redux/pizza/types'
 import { useAppDispatch } from '../redux/store'
 import { selectFilter } from '../redux/filter/selectors'
 import { Category } from '../redux/filter/types'
 import { fetchPizzas } from '../redux/pizza/asyncActions'
 import { selectPizzaData } from '../redux/pizza/selectors'
-
+import { useNavigate } from 'react-router-dom'
 
 export const Catalog: React.FC = () => {
-  //const dispatch = useDispatch()
+  const navigate = useNavigate()
   const dispatch = useAppDispatch()
   const isMounted = useRef(false)
 
@@ -51,7 +45,40 @@ export const Catalog: React.FC = () => {
     window.scrollTo(0, 0)
   }
 
-  useEffect(() => {
+  // Если изменили параметры и был первый рендер
+  useLayoutEffect(() => {
+    if (isMounted.current) {
+      const params = {
+        categoryId: category.id > 0 ? category.id : null,
+        sortProperty: sort.sortProperty,
+        currentPage: Number(currentPage),
+      }
+
+      const queryString = qs.stringify(params, { skipNulls: true })
+      console.log('queryString', queryString)
+      console.log('currentPage', currentPage)
+      console.log('category', category)
+      navigate(`/?${queryString}`);
+    }
+    if (window.location.search) {
+      const params = qs.parse(window.location.search.substring(1)) as unknown as SearchPizzaParams
+      const sortObj = sortList.find((obj) => obj.sortProperty === params.sortBy)
+      const categoryObj = categoriesList.find((obj) => obj.id === Number(params.category))
+
+      console.log('window', qs.parse(window.location.search.substring(1)).search)
+      console.log('params', params)
+      console.log('sortObj', sortObj)
+      console.log('categoryObj', categoryObj)
+
+      dispatch(
+        setFilters({
+          searchValue: params.search,
+          category: categoryObj || categoriesList[0],
+          currentPage: Number(params.currentPage),
+          sort: sortObj || sortList[0],
+        }),
+      )
+    }
     getPizzas()
   }, [category.id, sort.sortProperty, searchValue, currentPage])
 
@@ -71,7 +98,7 @@ export const Catalog: React.FC = () => {
         }),
       )
     }
-    //isMounted.current = true;
+    isMounted.current = true
   }, []);
 
   const pizzas = items.map((obj: any) => <PizzaBlock key={obj.id} {...obj} />)

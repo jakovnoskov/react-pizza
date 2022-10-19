@@ -2,7 +2,7 @@ import React from 'react'
 import styles from './GlobalLoader.module.scss'
 
 type loaderProps = {
-  smalMode: Boolean
+  smalMode?: Boolean
 }
 
 export const GlobalLoader: React.FC<loaderProps> = ({ smalMode = false }) => {

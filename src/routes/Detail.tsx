@@ -20,7 +20,7 @@ type PizzaItem = {
   count: number,
 }
 
-export const Detail: React.FC = () => {
+export default function Detail() {
   const params = useParams()
   const navigate = useNavigate()
   const dispatch = useDispatch()
