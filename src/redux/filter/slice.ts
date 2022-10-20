@@ -32,11 +32,15 @@ export const filterSlice = createSlice({
     },
     setFilters(state, action: PayloadAction<FilterSliceState>) {
       if (Object.keys(action.payload).length) {
+        console.log(action.payload)
+        state.searchValue = action.payload.searchValue
         state.currentPage = Number(action.payload.currentPage)
         state.category = action.payload.category
         state.sort = action.payload.sort
+        console.log(state.searchValue)
       } else {
-        state.currentPage = 1;
+        state.searchValue = ''
+        state.currentPage = 1
         state.category = {
           id: 0,
           name: 'Все',

@@ -1,15 +1,19 @@
-import React, { useRef, useState, useCallback } from 'react'
+import React, { useRef, useState, useCallback, useEffect } from 'react'
 import SearchSvg from '../../svg/SearchSvg'
 import ClearSearchSvg from '../../svg/ClearSearchSvg'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import debounce from 'lodash.debounce'
 
 import styles from './Search.module.scss'
 import { setSearchValue } from '../../redux/filter/slice'
+import { selectFilter } from '../../redux/filter/selectors'
+import { useSearchParams } from 'react-router-dom'
 
 export const Search: React.FC = () => {
   const dispatch = useDispatch()
-  const [value, setValue] = useState<string>('')
+  const [searchParams, setSearchParams] = useSearchParams()
+  const { searchValue } = useSelector(selectFilter)
+  const [value, setValue] = useState('')
   const inputRef = useRef<HTMLInputElement>(null)
 
   const onClickClear = () => {
@@ -28,7 +32,19 @@ export const Search: React.FC = () => {
   const onChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue(event.target.value)
     updateSearchValue(event.target.value)
+    // setSearchParams({
+    //   search: event.target.value
+    // })
   }
+
+  // useEffect(() => {
+  //   const searchUpar = searchParams.get('search')
+  //   if (searchUpar) {
+  //     setValue(searchUpar)
+  //     dispatch(setSearchValue(searchUpar))
+  //   }
+  //   return
+  // }, [])
 
   return (
     <div className={styles.root}>
